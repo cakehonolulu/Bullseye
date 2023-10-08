@@ -455,6 +455,6 @@ if __name__ == "__main__":
 
 	if (len(sys.argv) < 2):
 		print("Usage:")
-		print("adpcm.py <input>")
+		print("detect_audio_format.py <input>")
 
 	ripper.RipFile(sys.argv[1])
