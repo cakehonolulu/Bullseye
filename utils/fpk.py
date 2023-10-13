@@ -1,24 +1,9 @@
 import os,sys
 
-def extract_fpk(file_path, output_directory, offset):
+def extract_fpk(file_path, output_directory, offset, fpk_name):
     has_lst = False
 
     with open(file_path, 'rb') as fpk:
-        
-        fpk.seek(64)
-
-        fpk_name = ""
-
-        while True:
-            char = fpk.read(1)
-
-            if char == b'\x00' or not char:
-                break
-
-            fpk_name += char.decode('utf-8')
-
-        print(f"FPK Archive File: {fpk_name}")
-
         fpk.seek(offset)
 
         fpk_off = fpk.tell()
@@ -77,7 +62,7 @@ def extract_fpk(file_path, output_directory, offset):
             fpk.seek(tmp)
 
             if signature == b'fpk\0':
-                extract_fpk(file_path, output_directory, offset)
+                extract_fpk(file_path, output_directory, offset, fpk_name)
             else:
                 with open(file_name, 'wb') as output_file:
                     if (1==2): print(f"  {offset:08x} {size}     {file_name.replace(f'{output_directory}/', '')} ")
@@ -85,6 +70,23 @@ def extract_fpk(file_path, output_directory, offset):
                     fpk.seek(offset)
                     output_file.write(fpk.read(size))
                     fpk.seek(tmp)
+
+def find_fpk_name(fpk_file):
+    with open(fpk_file, 'rb') as fpk:
+        fpk.seek(64)
+        fpk_name = ""
+
+        while True:
+            char = fpk.read(1)
+            if char == b'\x00' or not char:
+                break
+            fpk_name += char.decode('utf-8')
+
+        print(f"FPK Archive File: {fpk_name}")
+
+        fpk.close()
+        return fpk_name
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
@@ -99,6 +101,8 @@ if __name__ == "__main__":
             if not os.path.exists(output_directory):
                 os.makedirs(output_directory)
             
-            extract_fpk(fpk_file, output_directory, 0)
+            fpk_name = find_fpk_name(fpk_file)
+
+            extract_fpk(fpk_file, output_directory, 0, fpk_name)
         else:
             print("File not found, exiting...")
