@@ -1,6 +1,6 @@
 import argparse
 from utils.md5 import calculate_md5,validate_md5
-from utils.extract_iso import extract_iso
+from utils.image import detect_image_type,extract_image
 
 def main():
 
@@ -16,16 +16,34 @@ def main():
 
 	# Check if either --image or --extracted is provided
 	if args.image:
-		print('Calculating the MD5 hash of the provided image...')
-		md5 = calculate_md5(args.image)
-		if (validate_md5(md5)):
-			print('Extracting the image file...')
-			extract_iso(args.image, args.output)
-		else:
-			print('Exiting...')
+		print("Detecting image type... ", end="")
 
-	else:
-		print('Checking local file...')
+		file_type = detect_image_type(args.image)
+		image_type = None
+
+		if file_type:
+			if file_type == "application/x-iso9660-image":
+				print("ISO image detected!")
+				image_type = "iso"
+			else:
+				print(f"Unsupported file type: {file_type}")
+				quit()
+		else:
+			print("Unable to determine the file type.")
+			quit()
+
+
+		print("Calculating the MD5 of the image file... ", end="", flush=True)
+
+		if (validate_md5(args.image, image_type)):
+			print("Valid hash found!")
+			extract_image(args.image, image_type, args.output)
+		else:
+			print("Unrecognized MD5! Exiting...")
+
+	elif args.extracted:
+		print("Using the an already extracted copy...")
+
 
 if __name__ == "__main__":
 	main()
