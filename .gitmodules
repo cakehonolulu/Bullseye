@@ -1,3 +1,0 @@
-[submodule "external/asm-differ"]
-	path = external/asm-differ
-	url = https://github.com/simonlindholm/asm-differ/
