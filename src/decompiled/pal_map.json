@@ -1,0 +1,9 @@
+{
+	"replacements": [
+	  {
+		"file_path": "entry.bin",
+		"offset": "0x1008",
+		"expected_size": 176
+	  }
+	]
+}

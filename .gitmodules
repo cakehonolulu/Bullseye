@@ -1,3 +1,6 @@
 [submodule "external/asm-differ"]
 	path = external/asm-differ
 	url = https://github.com/cakehonolulu/asm-differ
+[submodule "external/splat"]
+	path = external/splat
+	url = https://github.com/ethteck/splat
