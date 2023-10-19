@@ -6,7 +6,7 @@ import subprocess
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Directory containing the .S files
-source_directory = os.path.join(script_dir, 'ps2')
+source_directory = os.path.join(script_dir, 'asm')
 
 # Output directory for the binary dumps
 output_directory = os.path.join(script_dir, 'build')
