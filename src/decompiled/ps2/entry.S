@@ -3,6 +3,10 @@
 
 .set noreorder
 
+.macro move dest, src
+    daddu \dest, \src, $0
+.endm
+
 entry:
 	lui $v0, 0x32
 	lui $v1, 0x4d
