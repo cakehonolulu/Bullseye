@@ -40,17 +40,16 @@ LAB_00100018:
 	addiu $a1, $a1, -1
 	li $v1, 61
 	syscall
-	jal FUN_00138e08
+	jal FUN_00138E08
 	nop
-	jal FUN_00130ea0
+	jal FUN_00130EA0
 	move $a0, $zero
 	ei
 	lui $v0, 0x32
 	addiu $v0, $v0, -10880
 	lw $a0, 0($v0)
-	jal FUN_0016af7c
+	jal FUN_0016AF7C
 	addiu $a1, $v0, 4
 	j FUN_00139078
 	move $a0, $v0
 	nop
-
