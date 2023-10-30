@@ -1,29 +1,23 @@
+#include <bullseye.h>
 #include <stdbool.h>
-
-typedef void (*FunctionPtr)();
+#include <stdint.h>
 
 void entry(void)
 {
-	FunctionPtr functionPtr;
+	uint32_t src = 0x0031d300;
 
-	functionPtr = (FunctionPtr)0x00138d08;
+	volatile uint32_t *ptr = (uint32_t *) src;
 
-	functionPtr();
+    while (src < 0x004d04ac) {
+        *ptr = 0;
+        src += 4;
+        ptr++;
+    }
 
-	bool bVar1;
-	unsigned int in_zero_lo;
-	unsigned int in_zero_hi;
-	unsigned int in_zero_udw;
-	unsigned int in_register_0000000c;
-	unsigned long long *puVar2;
-	unsigned long long uVar3;
+    printf("Hello from Bullseye!\n");
 
-	puVar2 = (unsigned int *) 0x0031d300;
-	do {
-		*(unsigned long long *)puVar2 = 0;
-		bVar1 = puVar2 < (unsigned int *) 0x004d04ac;
-		puVar2 = puVar2 + 2;
-	} while (bVar1);
 
-	return;
+
+    while (1) {};
+
 }

@@ -1,6 +1,4 @@
 .section .text
-.global entry
-
 .set noreorder
 
 .macro move dest, src
