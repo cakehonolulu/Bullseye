@@ -15,8 +15,8 @@ def compile_and_dump(file_path):
 	# Build the assembly file and output the .o file to the build directory
 	output_object_path = os.path.join(output_directory, 'temp.o')
 
-	# Run the mipsel-none-elf-as command and capture the output
-	result = subprocess.run(['mipsel-none-elf-as', '-march=5900', '-EL', '-o', output_object_path, file_path],
+	# Run the mips64r5900el-ps2-elf-as command and capture the output
+	result = subprocess.run(['mips64r5900el-ps2-elf-as', '-o', output_object_path, file_path],
 							stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
 	# Print custom message with the file name being compiled
@@ -33,7 +33,7 @@ def compile_and_dump(file_path):
 			print(result.stderr)
 
 	# Convert to binary
-	subprocess.run(['mipsel-none-elf-objcopy', '-O', 'binary', '-j', '.text', '-R', '.note', '-R', '.comment', '-S', output_object_path, 'temp.bin'])
+	subprocess.run(['mips64r5900el-ps2-elf-objcopy', '-O', 'binary', '-j', '.text', '-R', '.note', '-R', '.comment', '-S', output_object_path, 'temp.bin'])
 
 	# Move the resulting binary to the output directory
 	output_path = os.path.join(output_directory, os.path.basename(file_path)[:-2] + '.bin')

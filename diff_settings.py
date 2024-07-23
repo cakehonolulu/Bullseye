@@ -3,6 +3,6 @@ import os
 def apply(config, args):
     config["baseimg"] = "target.bin"
     config["myimg"] = "entry.bin"
-    config["arch"] = "mips"
-    config["objdump_flags"] = ["-m", "mips:5900", "-Dz", "-bbinary", "-EL"]
+    config["arch"] = "mipsee"
+    config["objdump_executable"] = "mips64r5900el-ps2-elf-objdump"
     config["disassemble_all"] = True
