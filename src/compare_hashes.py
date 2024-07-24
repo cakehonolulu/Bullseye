@@ -2,6 +2,16 @@ import os
 import hashlib
 import json
 import subprocess
+import sys
+import tempfile
+from pathlib import Path
+from prompt_toolkit import Application
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.layout import Layout
+from prompt_toolkit.layout.containers import HSplit
+from prompt_toolkit.layout.controls import FormattedTextControl
+from prompt_toolkit.layout import Window
+from prompt_toolkit.formatted_text import ANSI
 
 # Define file paths
 root_dir = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
@@ -10,6 +20,11 @@ source_dir = os.path.join(root_dir, 'src')
 build_dir = os.path.join(source_dir, 'build')
 binary_file_path = os.path.join(working_dir, 'SLES_514.48')
 pal_map_path = os.path.join(source_dir, 'pal_map.json')
+diff_settings_path = os.path.join(source_dir, 'diff_settings.py')
+asm_differ_dir = os.path.join(root_dir, 'external', 'asm-differ')
+
+sys.path.append(asm_differ_dir)
+import diff_settings
 
 def read_bytes_from_file(file_path, offset, size):
     with open(file_path, 'rb') as f:
@@ -19,15 +34,52 @@ def read_bytes_from_file(file_path, offset, size):
 def compute_hash(data):
     return hashlib.sha256(data).hexdigest()
 
-def run_objdump(file_path):
-    result = subprocess.run(['mips64r5900el-ps2-elf-objdump', '-d', file_path],
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    return result.stdout if result.returncode == 0 else result.stderr
+def update_diff_settings(baseimg_path, myimg_path):
+    with open(diff_settings_path, 'w') as f:
+        f.write(f"""
+import os
 
-def main():
+def apply(config, args):
+    config["baseimg"] = "{baseimg_path}"
+    config["myimg"] = "{myimg_path}"
+    config["arch"] = "mipsee"
+    config["objdump_executable"] = "mips64r5900el-ps2-elf-objdump"
+    config["disassemble_all"] = True
+""")
+
+def run_asm_differ(baseimg_path, myimg_path, offset, size):
+    # Update diff_settings.py
+    update_diff_settings(baseimg_path, myimg_path)
+
+    # Define start and end arguments for diff.py
+    start = offset
+    end = offset + size
+
+    # Construct the command for asm-differ
+    diff_command = [
+        sys.executable,
+        os.path.join(asm_differ_dir, 'diff.py'),
+        "0"
+    ]
+
+    # Run the diff command in the context of src_dir
+    try:
+        result = subprocess.run(diff_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, cwd=source_dir, check=True)
+        return result.stdout
+    except subprocess.CalledProcessError as e:
+        print("Error running diff.py:")
+        print("Return code:", e.returncode)
+        print("Error output:")
+        print(e.stderr)
+        return e.stderr
+
+def display_comparisons():
     # Load pal_map.json
     with open(pal_map_path, 'r') as f:
         pal_map = json.load(f)
+
+    comparisons = []
+    matches = []
 
     for replacement in pal_map['replacements']:
         file_path = replacement['file_path']
@@ -36,12 +88,6 @@ def main():
 
         # Read bytes from working_dir binary file
         extracted_bytes = read_bytes_from_file(binary_file_path, offset, expected_size)
-
-        # Write extracted_bytes to a temporary binary file
-        temp_extracted_path = os.path.join(working_dir, 'temp.bin')
-        with open(temp_extracted_path, 'wb') as f:
-            f.write(extracted_bytes)
-
         extracted_hash = compute_hash(extracted_bytes)
 
         # Read bytes from build directory binary file
@@ -50,33 +96,108 @@ def main():
         build_hash = compute_hash(build_bytes)
 
         # Compare hashes
-        if extracted_hash == build_hash:
-            print(f"Match: {file_path} (offset: {offset}, size: {expected_size})")
+        if extracted_hash != build_hash:
+            # Create a temporary file for the extracted bytes
+            with tempfile.NamedTemporaryFile(delete=False) as temp_baseimg:
+                temp_baseimg.write(extracted_bytes)
+                temp_baseimg_path = temp_baseimg.name
+
+            asm_differ_output = run_asm_differ(temp_baseimg_path, build_file_path, offset, expected_size)
+            
+            # Clean up the temporary file after use
+            os.remove(temp_baseimg_path)
+            
+            comparisons.append((file_path, offset, expected_size, asm_differ_output))
         else:
-            print(f"Mismatch: {file_path} (offset: {offset}, size: {expected_size})")
-            print(f"Extracted Hash: {extracted_hash}")
-            print(f"Build Hash: {build_hash}")
-            
-            # Run objdump for both files
-            extracted_file_temp = os.path.join(working_dir, 'extracted_temp.bin')
-            build_file_temp = os.path.join(build_dir, 'build_temp.bin')
-            
-            with open(extracted_file_temp, 'wb') as f:
-                f.write(extracted_bytes)
-            with open(build_file_temp, 'wb') as f:
-                f.write(build_bytes)
-            
-            extracted_objdump = run_objdump(extracted_file_temp)
-            build_objdump = run_objdump(build_file_temp)
-            
-            print("\n--- Extracted Objdump ---")
-            print(extracted_objdump)
-            print("\n--- Build Objdump ---")
-            print(build_objdump)
-            
-            # Clean up temporary files
-            os.remove(extracted_file_temp)
-            os.remove(build_file_temp)
+            matches.append((file_path, offset, expected_size))
+    
+    return comparisons, matches
+
+def main_menu(comparisons, matches):
+    kb = KeyBindings()
+    menu_state = {'current_index': 0, 'show_diff': False, 'current_comparison': None}
+
+    @kb.add('up')
+    def up(event):
+        if menu_state['current_index'] > 0:
+            menu_state['current_index'] -= 1
+            app.invalidate()
+
+    @kb.add('down')
+    def down(event):
+        if menu_state['current_index'] < len(comparisons) - 1:
+            menu_state['current_index'] += 1
+            app.invalidate()
+
+    @kb.add('enter')
+    def enter(event):
+        if menu_state['current_index'] < len(comparisons):
+            menu_state['show_diff'] = True
+            menu_state['current_comparison'] = comparisons[menu_state['current_index']]
+            app.layout = get_layout()  # Force layout rebuild
+            app.invalidate()
+
+    def back(event):
+        menu_state['show_diff'] = False
+        menu_state['current_comparison'] = None
+        app.layout = get_layout()  # Force layout rebuild
+        app.invalidate()
+
+    @kb.add('q')
+    def quit_or_back(event):
+        if menu_state['show_diff']:
+            back(event)
+        else:
+            app.exit()
+
+    @kb.add('c-c')
+    def quit_ctrl_c(event):
+        app.exit()
+
+    def get_main_menu_content():
+        content = "Non-matching comparisons:\n"
+        for idx, (file_path, offset, size, _) in enumerate(comparisons):
+            selected_marker = '>' if idx == menu_state['current_index'] else ' '
+            content += f"{selected_marker} {file_path} (Offset: {'0x{:X}'.format(offset)}, Size: {size})\n"
+        
+        content += "\nMatching comparisons:\n"
+        for file_path, offset, size in matches:
+            content += f"  {file_path} (Offset: {'0x{:X}'.format(offset)}, Size: {size})\n"
+        
+        return content
+
+    def get_layout():
+        if menu_state['show_diff']:
+            if menu_state['current_comparison']:
+                file_path, offset, size, asm_differ_output = menu_state['current_comparison']
+                content = ANSI(f"--- ASM Differ Output ---\n{asm_differ_output}")
+            else:
+                content = "--- No comparison selected ---"
+            return Layout(
+                HSplit([
+                    Window(content=FormattedTextControl(text=lambda: content), height=20, width=80)
+                ]),
+                focused_element=None
+            )
+        else:
+            return Layout(
+                HSplit([
+                    Window(content=FormattedTextControl(text=lambda: get_main_menu_content()), height=20, width=80)
+                ]),
+                focused_element=None
+            )
+
+    global app
+    app = Application(layout=get_layout(), key_bindings=kb, full_screen=True)
+
+    try:
+        app.run()
+    except KeyboardInterrupt:
+        pass
 
 if __name__ == "__main__":
-    main()
+    comparisons, matches = display_comparisons()
+    if comparisons:
+        main_menu(comparisons, matches)
+    else:
+        print("No mismatches found.")

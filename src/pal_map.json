@@ -4,6 +4,16 @@
 		"file_path": "entry.bin",
 		"offset": "0x1008",
 		"expected_size": 176
+	  },
+	  {
+		"file_path": "FUN_00138E08.bin",
+		"offset": "0x39E08",
+		"expected_size": 60
+	  },
+	  {
+		"file_path": "FUN_001393A0.bin",
+		"offset": "0x3A3A0",
+		"expected_size": 16
 	  }
 	]
 }
