@@ -34,9 +34,18 @@ def read_bytes_from_file(file_path, offset, size):
 def compute_hash(data):
     return hashlib.sha256(data).hexdigest()
 
+my_env = os.environ.copy()
+
 def update_diff_settings(baseimg_path, myimg_path):
-    with open(diff_settings_path, 'w') as f:
-        f.write(f"""
+    my_env["DIFF_BASEIMG"] = baseimg_path
+    my_env["DIFF_MYIMG"] = baseimg_path
+    my_env["DIFF_ARCH"] = "mipsee"
+    my_env["DIFF_OBJDUMP_BIN"] = "mips64r5900el-ps2-elf-objdump"
+    my_env["DIFF_DISS_ALL"] = "True"
+    
+
+    """with open(diff_settings_path, 'w') as f:
+        f.write(f
 import os
 
 def apply(config, args):
@@ -45,7 +54,7 @@ def apply(config, args):
     config["arch"] = "mipsee"
     config["objdump_executable"] = "mips64r5900el-ps2-elf-objdump"
     config["disassemble_all"] = True
-""")
+)"""
 
 def run_asm_differ(baseimg_path, myimg_path, offset, size):
     # Update diff_settings.py
@@ -64,7 +73,7 @@ def run_asm_differ(baseimg_path, myimg_path, offset, size):
 
     # Run the diff command in the context of src_dir
     try:
-        result = subprocess.run(diff_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, cwd=source_dir, check=True)
+        result = subprocess.run(diff_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, cwd=source_dir, check=True, env=my_env)
         return result.stdout
     except subprocess.CalledProcessError as e:
         print("Error running diff.py:")
