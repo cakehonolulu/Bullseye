@@ -4,6 +4,7 @@ import json
 import subprocess
 import sys
 import tempfile
+from typing import Optional
 from pathlib import Path
 from prompt_toolkit import Application
 from prompt_toolkit.key_binding import KeyBindings
@@ -33,20 +34,26 @@ def compute_hash(data):
 
 my_env = os.environ.copy()
 
-def update_diff_settings(baseimg_path, myimg_path):
+def update_diff_settings(baseimg_path: str, myimg_path: str,
+                         baseimg_base_addr: Optional[int] = None, baseimg_end_addr: Optional[int] = None) -> None:
     my_env["DIFF_BASEIMG"] = baseimg_path
     my_env["DIFF_MYIMG"] = myimg_path
     my_env["DIFF_ARCH"] = "mipsee"
     my_env["DIFF_OBJDUMP_BIN"] = "mips64r5900el-ps2-elf-objdump"
     my_env["DIFF_DISS_ALL"] = "True"
 
-def run_asm_differ(baseimg_path, myimg_path, offset, size):
-    # Update diff_settings.py
-    update_diff_settings(baseimg_path, myimg_path)
+    if baseimg_base_addr is not None and baseimg_end_addr is not None:
+        my_env["DIFF_BASE_IMG_BASE"] = hex(baseimg_base_addr)
+        my_env["DIFF_BASE_IMG_END"] = hex(baseimg_end_addr)
+        my_env["DIFF_BASE_IMG_NAME"] = str(os.path.basename(baseimg_path))
 
+def run_asm_differ(baseimg_path, myimg_path, offset, size):
     # Define start and end arguments for diff.py
     start = offset
     end = offset + size
+
+    # Update diff_settings.py
+    update_diff_settings(baseimg_path, myimg_path, start, end)
 
     # Construct the command for asm-differ
     diff_command = [
@@ -90,15 +97,7 @@ def display_comparisons():
 
         # Compare hashes
         if extracted_hash != build_hash:
-            # Create a temporary file for the extracted bytes
-            with tempfile.NamedTemporaryFile(delete=False) as temp_baseimg:
-                temp_baseimg.write(extracted_bytes)
-                temp_baseimg_path = temp_baseimg.name
-
-            asm_differ_output = run_asm_differ(temp_baseimg_path, build_file_path, offset, expected_size)
-            
-            # Clean up the temporary file after use
-            os.remove(temp_baseimg_path)
+            asm_differ_output = run_asm_differ(binary_file_path, build_file_path, offset, expected_size)
             
             comparisons.append((file_path, offset, expected_size, asm_differ_output))
         else:
