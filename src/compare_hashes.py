@@ -20,12 +20,9 @@ source_dir = os.path.join(root_dir, 'src')
 build_dir = os.path.join(source_dir, 'build')
 binary_file_path = os.path.join(working_dir, 'SLES_514.48')
 pal_map_path = os.path.join(source_dir, 'pal_map.json')
-diff_settings_path = os.path.join(source_dir, 'diff_settings.py')
 asm_differ_dir = os.path.join(root_dir, 'external', 'asm-differ')
 
 sys.path.append(asm_differ_dir)
-import diff_settings
-
 def read_bytes_from_file(file_path, offset, size):
     with open(file_path, 'rb') as f:
         f.seek(offset)
@@ -38,23 +35,10 @@ my_env = os.environ.copy()
 
 def update_diff_settings(baseimg_path, myimg_path):
     my_env["DIFF_BASEIMG"] = baseimg_path
-    my_env["DIFF_MYIMG"] = baseimg_path
+    my_env["DIFF_MYIMG"] = myimg_path
     my_env["DIFF_ARCH"] = "mipsee"
     my_env["DIFF_OBJDUMP_BIN"] = "mips64r5900el-ps2-elf-objdump"
     my_env["DIFF_DISS_ALL"] = "True"
-    
-
-    """with open(diff_settings_path, 'w') as f:
-        f.write(f
-import os
-
-def apply(config, args):
-    config["baseimg"] = "{baseimg_path}"
-    config["myimg"] = "{myimg_path}"
-    config["arch"] = "mipsee"
-    config["objdump_executable"] = "mips64r5900el-ps2-elf-objdump"
-    config["disassemble_all"] = True
-)"""
 
 def run_asm_differ(baseimg_path, myimg_path, offset, size):
     # Update diff_settings.py
