@@ -3,3 +3,4 @@ working_dir/
 src/decompiled/build/
 *.bin
 *.o
+src/bullseye/bullseye.elf
