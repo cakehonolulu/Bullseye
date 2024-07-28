@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-void entry(void)
+int main(void)
 {
 	uint32_t src = 0x0031d300;
 
@@ -16,8 +16,5 @@ void entry(void)
 
     printf("Hello from Bullseye!\n");
 
-
-
     while (1) {};
-
 }
