@@ -6,4 +6,4 @@
 	url = https://github.com/ethteck/splat
 [submodule "external/m2c"]
 	path = external/m2c
-	url = https://github.com/cakehonolulu/m2c
+	url = https://github.com/matt-kempster/m2c
