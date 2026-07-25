@@ -85,8 +85,6 @@ def main():
         if n:
             total_files += 1
             total_lines += n
-            tag = "would fix" if check else "fixed"
-            print(f"{tag} {n:4d} line(s)  {f}")
 
     print(f"\n{total_lines} line(s) across {total_files} file(s)"
           f"{' (dry run, nothing written)' if check else ''}")
