@@ -1,0 +1,46 @@
+func_0024CD00 = 0x0024CD00;
+
+// The following were referenced by src/text_0.c's INCLUDE_ASM (via
+// config/undefined_funcs_auto.txt, i.e. splat saw them as jal/call
+// targets) but spimdisasm's own boundary heuristic did not independently
+// treat them as function starts, so no asm/nonmatchings/text_0/func_*.s
+// was ever emitted for them -- "can't open ... for reading" at assemble
+// time. Pinning them here with type:func forces splat to split a real
+// function at each address on the next --split.
+func_00175BF4 = 0x00175BF4; // type:func
+func_0018873C = 0x0018873C; // type:func
+func_0018A4BC = 0x0018A4BC; // type:func
+func_0018ABA0 = 0x0018ABA0; // type:func
+func_0018B1D8 = 0x0018B1D8; // type:func
+func_00191930 = 0x00191930; // type:func
+func_001E877C = 0x001E877C; // type:func
+func_001E8CCC = 0x001E8CCC; // type:func
+func_001E8F30 = 0x001E8F30; // type:func
+func_001E9260 = 0x001E9260; // type:func
+func_001EC158 = 0x001EC158; // type:func
+func_001EEF20 = 0x001EEF20; // type:func
+func_001EF1CC = 0x001EF1CC; // type:func
+func_001F22C0 = 0x001F22C0; // type:func
+func_001F29E8 = 0x001F29E8; // type:func
+func_001F38D8 = 0x001F38D8; // type:func
+func_001F48D4 = 0x001F48D4; // type:func
+func_001F757C = 0x001F757C; // type:func
+func_001F9B0C = 0x001F9B0C; // type:func
+func_001F9EAC = 0x001F9EAC; // type:func
+func_001FCCA0 = 0x001FCCA0; // type:func
+func_001FE73C = 0x001FE73C; // type:func
+func_001FF484 = 0x001FF484; // type:func
+func_001FF930 = 0x001FF930; // type:func
+func_00200B24 = 0x00200B24; // type:func
+func_002010FC = 0x002010FC; // type:func
+func_002016D4 = 0x002016D4; // type:func
+func_00202E20 = 0x00202E20; // type:func
+func_00210618 = 0x00210618; // type:func
+func_002127A8 = 0x002127A8; // type:func
+func_00214394 = 0x00214394; // type:func
+func_00217A00 = 0x00217A00; // type:func
+func_00219838 = 0x00219838; // type:func
+func_002206AC = 0x002206AC; // type:func
+func_00233C80 = 0x00233C80; // type:func
+func_00237104 = 0x00237104; // type:func
+func_0023A608 = 0x0023A608; // type:func

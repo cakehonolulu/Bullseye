@@ -1,0 +1,53 @@
+sha1: dc5b5172c9be651c476fea0e7620e47775c9dd81
+
+options:
+  basename: SLES_514_48
+  target_path: orig/SLES_514.48
+  platform: ps2
+  compiler: GCC
+  base_path: ..
+  asm_path: asm
+  src_path: src
+  build_path: build
+  asset_path: assets
+  create_undefined_funcs_auto: True
+  create_undefined_syms_auto: True
+  symbol_addrs_path: config/symbol_addrs.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.txt
+  ld_script_path: config/generated.ld
+  find_file_boundaries: True
+  section_order: [".text", ".data", ".rodata", ".bss"]
+  auto_link_sections: [".data", ".rodata", ".bss"]
+  ld_align_section_vram_end: False
+  ld_align_segment_vram_end: False
+  auto_decompile_empty_functions: False
+
+segments:
+  - name: SLES_514_48_0
+    type: code
+    start: 0x1000
+    vram: 0x00100000
+    subalign: 4
+    subsegments:
+      - [0x1000, c, text_0]
+      - [0x14DD00, c, text_1]
+      - [0x151BB8, rodata, reginfo]
+      - [0x151BD0]
+  - [0x151BD0]
+  - name: SLES_514_48_1
+    type: code
+    start: 0x151C00
+    vram: 0x00250C00
+    subalign: 4
+    bss_size: 0x1B31AC
+    subsegments:
+      - [0x151C00, data, data_0]
+      - [0x1FD300, data, data_1]
+      - [0x20BC80, data, rodata]
+      - [0x219D00, data, gcc_except_table]
+      - [0x21A800, data, lit4]
+      - [0x21BF00, data, sdata]
+      - [0x21E2EC, bin, sdata_tail]
+      - [0x21E2ED]
+  - [0x21E2ED]
