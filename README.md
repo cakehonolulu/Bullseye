@@ -19,6 +19,16 @@ container around it is carried from the original (see
 
 "Undecompiled code" is still assembly pulled in via `INCLUDE_ASM`.
 
+## Progress
+
+<!-- progress:start -->
+**0.0030%** of the code is decompiled (40 / 1,328,837 bytes).
+
+| File | Functions | Bytes |
+|---|---:|---:|
+| `src/text_0.c` | 1 | 40 |
+<!-- progress:end -->
+
 ## Requirements
 
 * **EE binutils** — `mips64r5900el-ps2-elf-as`, `-ld`, `-objdump` on

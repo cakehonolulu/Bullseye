@@ -194,7 +194,14 @@ INCLUDE_ASM("asm/nonmatchings/text_0", func_00105C60);
 
 INCLUDE_ASM("asm/nonmatchings/text_0", func_00105E38);
 
-INCLUDE_ASM("asm/nonmatchings/text_0", func_00105E70);
+u32 func_00105E70(u32 arg0) {
+    u32 old = *(volatile u32 *)0x1000E060;
+
+    if (arg0 != 0xFFFFFFFF) {
+        *(volatile u32 *)0x1000E060 = arg0;
+    }
+    return old;
+}
 
 INCLUDE_ASM("asm/nonmatchings/text_0", func_00105E98);
 
