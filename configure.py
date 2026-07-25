@@ -26,6 +26,7 @@ CC1_FLAGS = [
     "-fno-common",
     "-funsigned-char",
     "-fno-strict-aliasing",
+    "-malign-functions=2",
     "-quiet",
 ]
 CPP_FLAGS = ["-lang-c", "-D__GNUC__=2"]
@@ -198,6 +199,10 @@ def write_ninja(asm, src, binf, cc, cpp, launcher):
     w(f"  command = python3 tools/verify.py orig/{VERSION} $in && touch $out")
     w("  description = VERIFY $in")
     w("")
+    w("rule mktarget")
+    w("  command = python3 tools/mktarget.py $unit $out")
+    w("  description = MKTARGET $out")
+    w("")
 
     objs = []
     for p in asm:
@@ -215,6 +220,19 @@ def write_ninja(asm, src, binf, cc, cpp, launcher):
         w(f"build {s}: cc {i}")
         w(f"build {o}: as {s}")
         objs.append(o)
+    w("")
+
+    targets = []
+    for p in src:
+        unit = p.stem
+        if not (ROOT / "asm" / "nonmatchings" / unit).is_dir():
+            continue
+        w(f"build build/target/{unit}.s: mktarget")
+        w(f"  unit = {unit}")
+        w(f"build build/target/{unit}.o: as build/target/{unit}.s")
+        targets.append(f"build/target/{unit}.o")
+    if targets:
+        w(f"build targets: phony {' '.join(targets)}")
     w("")
 
     extra = [f"config/undefined_syms_auto.txt",
@@ -251,17 +269,18 @@ def write_objdiff(src):
     cfg = {
         "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",
         "custom_make": "ninja",
-        "build_target": False,
+        "build_target": True,
         "build_base": True,
         "watch_patterns": ["*.c", "*.cpp", "*.h", "*.s", "*.inc",
                            "*.py", "*.yaml", "*.txt"],
         "units": [
             {
-                "name": p.relative_to(ROOT / "src").with_suffix("").as_posix(),
+                "name": p.stem,
                 "target_path": f"build/target/{p.stem}.o",
                 "base_path": obj_path(p.relative_to(ROOT)),
             }
             for p in src
+            if (ROOT / "asm" / "nonmatchings" / p.stem).is_dir()
         ],
     }
     (ROOT / "objdiff.json").write_text(json.dumps(cfg, indent=2) + "\n")
