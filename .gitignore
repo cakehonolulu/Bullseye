@@ -24,6 +24,9 @@ tools/objdiff-cli
 tools/wibo
 tools/m2c/
 tools/decomp-permuter/
+tools/ccc/
+
+tools/objdiff*
 
 .venv/
 venv/
@@ -31,3 +34,14 @@ __pycache__/
 *.pyc
 .vscode/
 .idea/
+
+config/*.target.yaml
+config/*.target.ld
+config/*.target.txt
+
+nonmatchings/
+
+build/ctx.c
+
+*.swp
+*.swo

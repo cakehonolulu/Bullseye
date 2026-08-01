@@ -45,7 +45,7 @@ container around it is carried from the original (see
 bash tools/setup.sh
 ```
 
-Downloads the period compiler (`ee-gcc2.9-991111-01`) from
+Downloads the period compiler (`ee-gcc2.96`) from
 [decompme/compilers](https://github.com/decompme/compilers), plus
 `objdiff-cli`, `m2c` and `decomp-permuter`, and installs `splat` and
 `ninja`. Everything lands in `tools/` and is gitignored.

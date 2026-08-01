@@ -30,8 +30,216 @@ segments:
     vram: 0x00100000
     subalign: 4
     subsegments:
-      - [0x1000, c, text_0]
-      - [0x14DD00, c, text_1]
+      - [0x1000, cpp, text_0]
+      - [0x18d58, cpp, stdiobuf]   # 0x00117d58, 8 fn (8 attributed)
+      - [0x19050, cpp, unk_00118050]   # 0x00118050, 6 fn
+      - [0x19160, cpp, streambuf]   # 0x00118160, 29 fn (17 attributed)
+      - [0x195c8, cpp, unk_001185C8]   # 0x001185c8, 87 fn
+      - [0x1d290, cpp, filebuf]   # 0x0011c290, 18 fn (14 attributed)
+      - [0x1d640, cpp, unk_0011C640]   # 0x0011c640, 36 fn
+      - [0x222a0, cpp, CTaskVSync]   # 0x001212a0, 1 fn (1 attributed)
+      - [0x222b8, cpp, unk_001212B8]   # 0x001212b8, 57 fn
+      - [0x254c8, cpp, type_info]   # 0x001244c8, 1 fn (1 attributed)
+      - [0x25500, cpp, unk_00124500]   # 0x00124500, 6 fn
+      - [0x25768, cpp, __user_type_info]   # 0x00124768, 3 fn (3 attributed)
+      - [0x25878, cpp, __si_type_info]   # 0x00124878, 3 fn (3 attributed)
+      - [0x25ae0, cpp, __class_type_info]   # 0x00124ae0, 3 fn (3 attributed)
+      - [0x262c8, cpp, unk_001252C8]        # 0x001252c8, fn
+      - [0x39e08, c, func_00138E08]       # 0x00138e08, 1 fn
+      - [0x39e48, cpp, unk_00138E48]        # 0x00138e48, fn
+      - [0x3f3bc, cpp, CKzSprite_CarryNum]   # 0x0013e3bc, 6 fn (5 attributed)
+      - [0x3f838, cpp, unk_0013E838]   # 0x0013e838, 4 fn
+      - [0x3f928, cpp, CKzSprite_ArmsIcon]   # 0x0013e928, 6 fn (5 attributed)
+      - [0x3fc38, cpp, unk_0013EC38]   # 0x0013ec38, 58 fn
+      - [0x454f4, cpp, CKzSprite_AlertLeft]   # 0x001444f4, 7 fn (6 attributed)
+      - [0x4599c, cpp, unk_0014499C]   # 0x0014499c, 17 fn
+      - [0x46884, cpp, CKzSprite_Cartrg9MM]   # 0x00145884, 8 fn (5 attributed)
+      - [0x46eb4, cpp, unk_00145EB4]   # 0x00145eb4, 29 fn
+      - [0x47d6c, cpp, CKzSprite_LoadNumBER]   # 0x00146d6c, 6 fn (5 attributed)
+      - [0x483e8, cpp, unk_001473E8]   # 0x001473e8, 3 fn
+      - [0x48470, cpp, CKzSprite_LineRight]   # 0x00147470, 6 fn (5 attributed)
+      - [0x4873c, cpp, unk_0014773C]   # 0x0014773c, 3 fn
+      - [0x487c4, cpp, CKzSprite_NoBullet]   # 0x001477c4, 6 fn (5 attributed)
+      - [0x48abc, cpp, unk_00147ABC]   # 0x00147abc, 8 fn
+      - [0x48b84, cpp, CKzVrInfo]   # 0x00147b84, 1 fn (1 attributed)
+      - [0x48b8c, cpp, unk_00147B8C]   # 0x00147b8c, 1 fn
+      - [0x48bc0, cpp, CKzSprite_LoadNumGLK]   # 0x00147bc0, 6 fn (5 attributed)
+      - [0x49248, cpp, unk_00148248]   # 0x00148248, 9 fn
+      - [0x494e4, cpp, CKzSprite_LoadNumGRN]   # 0x001484e4, 6 fn (5 attributed)
+      - [0x49b5c, cpp, unk_00148B5C]   # 0x00148b5c, 3 fn
+      - [0x49be4, cpp, CKzSprite_LoadNumHPP]   # 0x00148be4, 6 fn (5 attributed)
+      - [0x4a244, cpp, unk_00149244]   # 0x00149244, 4 fn
+      - [0x4a35c, cpp, CKzSprite_LifeStatus]   # 0x0014935c, 6 fn (5 attributed)
+      - [0x4a7d0, cpp, unk_001497D0]   # 0x001497d0, 3 fn
+      - [0x4a858, cpp, CKzSprite_LineLeft]   # 0x00149858, 6 fn (5 attributed)
+      - [0x4ab24, cpp, unk_00149B24]   # 0x00149b24, 3 fn
+      - [0x4abac, cpp, CKzSprite_LoadNumMAG]   # 0x00149bac, 6 fn (5 attributed)
+      - [0x4b228, cpp, unk_0014A228]   # 0x0014a228, 28 fn
+      - [0x4e384, cpp, CKzSprite_LoadNumRFL]   # 0x0014d384, 6 fn (5 attributed)
+      - [0x4eac8, cpp, unk_0014DAC8]   # 0x0014dac8, 4 fn
+      - [0x4ec64, cpp, CKzSprite_LoadNumSHT]   # 0x0014dc64, 6 fn (5 attributed)
+      - [0x4f2e0, cpp, unk_0014E2E0]   # 0x0014e2e0, 3 fn
+      - [0x4f368, cpp, CKzSprite_LoadNumTBT]   # 0x0014e368, 6 fn (5 attributed)
+      - [0x4f73c, cpp, unk_0014E73C]   # 0x0014e73c, 39 fn
+      - [0x509b8, cpp, CKzGunAdjust]   # 0x0014f9b8, 6 fn (4 attributed)
+      - [0x51118, cpp, unk_00150118]   # 0x00150118, 7 fn
+      - [0x51438, cpp, CKzSprite]   # 0x00150438, 9 fn (9 attributed)
+      - [0x514c4, cpp, unk_001504C4]   # 0x001504c4, 21 fn
+      - [0x51c40, cpp, CKzSprite_TbusterBat]   # 0x00150c40, 6 fn (5 attributed)
+      - [0x51f0c, cpp, unk_00150F0C]   # 0x00150f0c, 26 fn
+      - [0x527fc, cpp, CKzSprite_ArmsName]   # 0x001517fc, 6 fn (5 attributed)
+      - [0x52b0c, cpp, unk_00151B0C]   # 0x00151b0c, 10 fn
+      - [0x52cbc, cpp, CKzSprite_LifeMeter]   # 0x00151cbc, 6 fn (5 attributed)
+      - [0x5306c, cpp, unk_0015206C]   # 0x0015206c, 6 fn
+      - [0x53794, cpp, CKzSprite_GunSight]   # 0x00152794, 6 fn (5 attributed)
+      - [0x53ab0, cpp, unk_00152AB0]   # 0x00152ab0, 3 fn
+      - [0x53b6c, cpp, CKzSprite_CartrgMAG]   # 0x00152b6c, 8 fn (5 attributed)
+      - [0x5419c, cpp, unk_0015319C]   # 0x0015319c, 8 fn
+      - [0x544d8, cpp, CKzSprite_LoadNum]   # 0x001534d8, 6 fn (5 attributed)
+      - [0x548f8, cpp, unk_001538F8]   # 0x001538f8, 3 fn
+      - [0x54980, cpp, CKzSprite_TbusterPow]   # 0x00153980, 6 fn (5 attributed)
+      - [0x54c9c, cpp, unk_00153C9C]   # 0x00153c9c, 5 fn
+      - [0x54f94, cpp, CKzSprite_CartrgRFL]   # 0x00153f94, 8 fn (5 attributed)
+      - [0x555c4, cpp, unk_001545C4]   # 0x001545c4, 5 fn
+      - [0x558c0, cpp, CKzSprite_AlertRight]   # 0x001548c0, 7 fn (6 attributed)
+      - [0x55d68, cpp, unk_00154D68]   # 0x00154d68, 8 fn
+      - [0x56284, cpp, CKzSprite_CartrgSHT]   # 0x00155284, 8 fn (5 attributed)
+      - [0x568b4, cpp, unk_001558B4]   # 0x001558b4, 31 fn
+      - [0x57d1c, cpp, CModelViewTask]   # 0x00156d1c, 6 fn (4 attributed)
+      - [0x5c2fc, cpp, unk_0015B2FC]   # 0x0015b2fc, 7 fn
+      - [0x5d228, cpp, CZimView]   # 0x0015c228, 5 fn (5 attributed)
+      - [0x5d6dc, cpp, unk_0015C6DC]   # 0x0015c6dc, 169 fn
+      - [0x679e4, cpp, CTaskMenu]   # 0x001669e4, 2 fn (2 attributed)
+      - [0x67c2c, cpp, unk_00166C2C]   # 0x00166c2c, 44 fn
+      - [0x69fac, cpp, CFadeMan]   # 0x00168fac, 2 fn (2 attributed)
+      - [0x6a19c, cpp, unk_0016919C]   # 0x0016919c, 5 fn
+      - [0x6a664, cpp, CTaskFileSelect]   # 0x00169664, 7 fn (5 attributed)
+      - [0x6ad18, cpp, unk_00169D18]   # 0x00169d18, 178 fn
+      - [0x72504, cpp, CHlzDecodeSpad]   # 0x00171504, 4 fn (4 attributed)
+      - [0x7258c, cpp, unk_0017158C]   # 0x0017158c, 202 fn
+      - [0x87d3c, cpp, CTaskCDVD]   # 0x00186d3c, 1 fn (1 attributed)
+      - [0x87df0, cpp, unk_00186DF0]   # 0x00186df0, 9 fn
+      - [0x88234, cpp, CTaskDebug]   # 0x00187234, 1 fn (1 attributed)
+      - [0x88358, cpp, unk_00187358]   # 0x00187358, 13 fn
+      - [0x88978, cpp, OptBool]   # 0x00187978, 5 fn (4 attributed)
+      - [0x88aac, cpp, unk_00187AAC]   # 0x00187aac, 1 fn
+      - [0x88b4c, cpp, OptInt]   # 0x00187b4c, 5 fn (4 attributed)
+      - [0x88cd8, cpp, unk_00187CD8]   # 0x00187cd8, 1 fn
+      - [0x88d78, cpp, OptFloat]   # 0x00187d78, 5 fn (4 attributed)
+      - [0x88f44, cpp, unk_00187F44]   # 0x00187f44, 5 fn
+      - [0x89028, cpp, OptGrid]   # 0x00188028, 1 fn (1 attributed)
+      - [0x891b4, cpp, unk_001881B4]   # 0x001881b4, 81 fn
+      - [0x90870, cpp, CBioTaskSetup]   # 0x0018f870, 1 fn (1 attributed), 1 stray
+      - [0x90940, cpp, unk_0018F940]   # 0x0018f940, 31 fn
+      - [0x92678, cpp, CEfAnimInfo]   # 0x00191678, 1 fn (1 attributed)
+      - [0x92810, cpp, unk_00191810]   # 0x00191810, 189 fn
+      - [0xa231c, cpp, ctk_task]   # 0x001a131c, 2 fn (2 attributed)
+      - [0xa2368, cpp, unk_001A1368]   # 0x001a1368, 13 fn
+      - [0xa4314, cpp, ctk_task_3d]   # 0x001a3314, 3 fn (3 attributed)
+      - [0xa438c, cpp, unk_001A338C]   # 0x001a338c, 3 fn
+      - [0xa4508, cpp, mc_menu]   # 0x001a3508, 14 fn (6 attributed)
+      - [0xa941c, cpp, unk_001A841C]   # 0x001a841c, 4 fn
+      - [0xa9598, cpp, file_view]   # 0x001a8598, 4 fn (4 attributed)
+      - [0xaa4fc, cpp, unk_001A94FC]   # 0x001a94fc, 2 fn
+      - [0xaa5dc, cpp, menu_save]   # 0x001a95dc, 20 fn (8 attributed)
+      - [0xb0818, cpp, unk_001AF818]   # 0x001af818, 18 fn
+      - [0xb19d4, cpp, scrtime]   # 0x001b09d4, 4 fn (4 attributed)
+      - [0xb269c, cpp, unk_001B169C]   # 0x001b169c, 6 fn
+      - [0xb2848, cpp, menu_map]   # 0x001b1848, 13 fn (5 attributed)
+      - [0xb4310, cpp, unk_001B3310]   # 0x001b3310, 10 fn
+      - [0xb896c, cpp, open_game]   # 0x001b796c, 3 fn (3 attributed), 2 stray
+      - [0xbb068, cpp, unk_001BA068]   # 0x001ba068, 7 fn
+      - [0xbbcbc, cpp, menu_opt]   # 0x001bacbc, 4 fn (4 attributed)
+      - [0xbcc1c, cpp, unk_001BBC1C]   # 0x001bbc1c, 23 fn
+      - [0xc19b4, cpp, menu_file]   # 0x001c09b4, 7 fn (5 attributed)
+      - [0xc2b28, cpp, unk_001C1B28]   # 0x001c1b28, 7 fn
+      - [0xc3324, cpp, map_view]   # 0x001c2324, 8 fn (5 attributed)
+      - [0xc4870, cpp, unk_001C3870]   # 0x001c3870, 5 fn
+      - [0xc4a84, cpp, get_item]   # 0x001c3a84, 5 fn (4 attributed)
+      - [0xc70d4, cpp, unk_001C60D4]   # 0x001c60d4, 5 fn
+      - [0xc7220, cpp, opt_adjust]   # 0x001c6220, 4 fn (4 attributed)
+      - [0xc740c, cpp, unk_001C640C]   # 0x001c640c, 16 fn
+      - [0xc7920, cpp, cmenu_base]   # 0x001c6920, 30 fn (20 attributed)
+      - [0xc8cf8, cpp, unk_001C7CF8]   # 0x001c7cf8, 7 fn
+      - [0xc9bfc, cpp, d_demo]   # 0x001c8bfc, 4 fn (4 attributed)
+      - [0xca858, cpp, unk_001C9858]   # 0x001c9858, 4 fn
+      - [0xcacc0, cpp, menu_item]   # 0x001c9cc0, 9 fn (4 attributed)
+      - [0xce174, cpp, unk_001CD174]   # 0x001cd174, 6 fn
+      - [0xce3c4, cpp, gs4_result]   # 0x001cd3c4, 5 fn (5 attributed)
+      - [0xcf49c, cpp, unk_001CE49C]   # 0x001ce49c, 86 fn
+      - [0xd1fa0, cpp, mc2dmenu]   # 0x001d0fa0, 6 fn (6 attributed)
+      - [0xd20a0, cpp, unk_001D10A0]   # 0x001d10a0, 3 fn
+      - [0xd20e0, cpp, task_sample]   # 0x001d10e0, 6 fn (6 attributed)
+      - [0xd22a4, cpp, unk_001D12A4]   # 0x001d12a4, 1 fn
+      - [0xd23c8, cpp, TBioTaskVSync]   # 0x001d13c8, 8 fn (8 attributed), 1 stray
+      - [0xd2760, cpp, unk_001D1760]   # 0x001d1760, 110 fn
+      - [0xd8540, cpp, CActorPlayer]   # 0x001d7540, 8 fn (3 attributed)
+      - [0xd8df4, cpp, unk_001D7DF4]   # 0x001d7df4, 95 fn
+      - [0xe96c8, cpp, CActorBugbug]   # 0x001e86c8, 18 fn (17 attributed), 1 stray
+      - [0xeac30, cpp, unk_001E9C30]   # 0x001e9c30, 2 fn
+      - [0xeb2d8, cpp, CActorBomb]   # 0x001ea2d8, 3 fn (3 attributed)
+      - [0xeb508, cpp, CActorBugbugQueen]   # 0x001ea508, 12 fn (12 attributed)
+      - [0xebf70, cpp, unk_001EAF70]   # 0x001eaf70, 2 fn
+      - [0xec6d4, cpp, CActorDimmer]   # 0x001eb6d4, 31 fn (31 attributed)
+      - [0xeef48, cpp, unk_001EDF48]   # 0x001edf48, 2 fn
+      - [0xeff20, cpp, CActorHunter]   # 0x001eef20, 26 fn (26 attributed)
+      - [0xf19f8, cpp, unk_001F09F8]   # 0x001f09f8, 3 fn
+      - [0xf31e8, cpp, CActorOrganPlant]   # 0x001f21e8, 3 fn (3 attributed)
+      - [0xf32c0, cpp, CActorPluto]   # 0x001f22c0, 26 fn (24 attributed)
+      - [0xf59f0, cpp, unk_001F49F0]   # 0x001f49f0, 2 fn
+      - [0xf6db4, cpp, CActorTopdoKid]   # 0x001f5db4, 19 fn (18 attributed)
+      - [0xf77a4, cpp, unk_001F67A4]   # 0x001f67a4, 2 fn
+      - [0xf790c, cpp, CActorUboat]   # 0x001f690c, 9 fn (9 attributed), 4 stray
+      - [0xf8358, cpp, unk_001F7358]   # 0x001f7358, 2 fn
+      - [0xf855c, cpp, CActorTyrantZero]   # 0x001f755c, 10 fn (10 attributed), 1 stray
+      - [0xf9450, cpp, unk_001F8450]   # 0x001f8450, 2 fn
+      - [0xfab0c, cpp, CActorZombie]   # 0x001f9b0c, 32 fn (32 attributed), 1 stray
+      - [0xffccc, cpp, unk_001FECCC]   # 0x001feccc, 4 fn
+      - [0x100484, cpp, CActorTyrantLady]   # 0x001ff484, 28 fn (27 attributed), 4 stray
+      - [0x104874, cpp, unk_00203874]   # 0x00203874, 64 fn
+      - [0x111618, cpp, CActorTyrantLady2]   # 0x00210618, 90 fn (25 attributed), 12 stray
+      - [0x11b260, cpp, unk_0021A260]   # 0x0021a260, 28 fn
+      - [0x11cef4, cpp, CTaskGame]   # 0x0021bef4, 2 fn (2 attributed), 2 stray
+      - [0x11d0d8, cpp, unk_0021C0D8]   # 0x0021c0d8, 221 fn
+      - [0x12bae0, cpp, CActorMaster]   # 0x0022aae0, 2 fn (2 attributed)
+      - [0x12bdac, cpp, unk_0022ADAC]   # 0x0022adac, 40 fn
+      - [0x12e704, cpp, CTrapDoor]   # 0x0022d704, 1 fn (1 attributed)
+      - [0x12e848, cpp, unk_0022D848]   # 0x0022d848, 1 fn
+      - [0x12e87c, cpp, CTrapScript]   # 0x0022d87c, 1 fn (1 attributed)
+      - [0x12e8f0, cpp, unk_0022D8F0]   # 0x0022d8f0, 1 fn
+      - [0x12e928, cpp, CTrapMessage]   # 0x0022d928, 1 fn (1 attributed)
+      - [0x12e998, cpp, unk_0022D998]   # 0x0022d998, 1 fn
+      - [0x12e9c0, cpp, CTrapFire]   # 0x0022d9c0, 1 fn (1 attributed)
+      - [0x12ea68, cpp, unk_0022DA68]   # 0x0022da68, 70 fn
+      - [0x130da8, cpp, CBioMPEG]   # 0x0022fda8, 5 fn (4 attributed)
+      - [0x1311c4, cpp, unk_002301C4]   # 0x002301c4, 23 fn
+      - [0x131e38, cpp, CFeulerAdapter]   # 0x00230e38, 1 fn (1 attributed)
+      - [0x132034, cpp, unk_00231034]   # 0x00231034, 101 fn
+      - [0x1343f8, cpp, CCameraArmAdapter]   # 0x002333f8, 1 fn (1 attributed)
+      - [0x134514, cpp, unk_00233514]   # 0x00233514, 2 fn
+      - [0x134554, cpp, CCamera]   # 0x00233554, 2 fn (2 attributed)
+      - [0x134660, cpp, CCameraArm]   # 0x00233660, 4 fn (3 attributed), 1 stray
+      - [0x134840, cpp, unk_00233840]   # 0x00233840, 2 fn
+      - [0x134868, cpp, CCameraMix]   # 0x00233868, 1 fn (1 attributed)
+      - [0x134924, cpp, CCameraPursuer]   # 0x00233924, 1 fn (1 attributed)
+      - [0x134a34, cpp, unk_00233A34]   # 0x00233a34, 4 fn
+      - [0x134b48, cpp, CCameraTail]   # 0x00233b48, 4 fn (3 attributed), 1 stray
+      - [0x1351a8, cpp, CCameraMotion]   # 0x002341a8, 2 fn (2 attributed)
+      - [0x135684, cpp, unk_00234684]   # 0x00234684, 3 fn
+      - [0x13571c, cpp, CCameraFix]   # 0x0023471c, 5 fn (3 attributed), 1 stray
+      - [0x135aec, cpp, unk_00234AEC]   # 0x00234aec, 33 fn
+      - [0x136ee4, cpp, CActorGrenade]   # 0x00235ee4, 5 fn (5 attributed)
+      - [0x1372bc, cpp, unk_002362BC]   # 0x002362bc, 1 fn
+      - [0x1373cc, cpp, CActorTBuster]   # 0x002363cc, 4 fn (4 attributed)
+      - [0x137850, cpp, unk_00236850]   # 0x00236850, 9 fn
+      - [0x138104, cpp, CActorItem]   # 0x00237104, 4 fn (4 attributed)
+      - [0x138708, cpp, unk_00237708]   # 0x00237708, 51 fn
+      - [0x13abe0, cpp, CWorkSettingMoveAndShooting]   # 0x00239be0, 3 fn (3 attributed)
+      - [0x13ada0, cpp, CWorkSettingMenuItem]   # 0x00239da0, 3 fn (3 attributed)
+      - [0x13ae84, cpp, unk_00239E84]   # 0x00239e84, 13 fn
+      - [0x13b608, cpp, CActorDecoy]   # 0x0023a608, 3 fn (3 attributed)
+      - [0x13b90c, cpp, unk_0023A90C]   # 0x0023a90c, 751 fn
+      - [0x14DD00, cpp, text_1]
       - [0x151BB8, rodata, reginfo]
       - [0x151BD0]
   - [0x151BD0]

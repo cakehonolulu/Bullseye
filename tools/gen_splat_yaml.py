@@ -10,7 +10,7 @@ SHF_EXECINSTR = 0x4
 SHF_WRITE = 0x1
 EXACT_SEGMENT_END = True
 
-TEXT_SUBSEGMENT_TYPE = "c"
+TEXT_SUBSEGMENT_TYPE = "cpp"
 
 def read_elf(path: Path):
     d = path.read_bytes()

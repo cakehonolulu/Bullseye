@@ -19,7 +19,7 @@ if [ "${1:-}" = "--list" ]; then
     exit 0
 fi
 
-COMPILER_ID="${1:-ee-gcc2.9-991111-01}"
+COMPILER_ID="${1:-ee-gcc2.96}"
 COMPILER_DIR="$ROOT/tools/compilers/$COMPILER_ID"
 
 if [ ! -d "$COMPILER_DIR" ]; then
